@@ -1,0 +1,87 @@
+/* Estilos generales para navbar */
+.navbar-admin {
+  background-color: #343a40; /* Fondo oscuro */
+  padding: 10px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor para distribuir el contenido */
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Título a la izquierda */
+.navbar-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f8f9fa; /* Blanco claro */
+}
+
+.navbar-logo .role {
+  font-weight: 400;
+  color: #adb5bd; /* Gris claro */
+  margin-left: 6px;
+}
+
+/* Menú de navegación a la derecha */
+.navbar-links {
+  display: flex;
+  gap: 25px;
+  align-items: center; /* Para alinear el botón con los links */
+}
+
+.navbar-links a {
+  color: #f8f9fa;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+/* Hover con fondo y cambio de color */
+.navbar-links a:hover {
+  background-color: #495057;
+  color: #e9ecef;
+}
+
+/* Estilo especial para el botón de Cerrar Sesión */
+.logout-link {
+  background-color: #dc3545; /* Rojo */
+  color: #fff !important;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  border: none; /* Sin borde para el botón */
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logout-link:hover {
+  background-color: #b02a37;
+  color: #fff !important;
+}
+
+/* Responsive básico */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-links {
+    margin-top: 10px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+}

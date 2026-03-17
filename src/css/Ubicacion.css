@@ -1,0 +1,10 @@
+.ubicacion {
+  padding: 20px;
+  text-align: center;
+}
+
+.ubicacion .info {
+  margin-top: 25px;
+  font-size: 0.9em;
+  color: #777;
+}

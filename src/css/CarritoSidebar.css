@@ -1,0 +1,18 @@
+/* Carrito lateral oculto */
+.carrito-sidebar {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1055;
+  padding: 20px;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.carrito-sidebar.open {
+  right: 0;
+}

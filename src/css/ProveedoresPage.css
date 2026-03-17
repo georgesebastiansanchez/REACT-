@@ -1,0 +1,68 @@
+/* ===== Navbar ===== */
+.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.navbar-brand {
+  font-weight: 600 !important;
+  color: #212529 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05) !important;
+  color: #000 !important;
+}
+
+/* ===== Botones ===== */
+button,
+.btn {
+  background-color: #2563eb !important; /* azul tipo tailwind */
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
+  font-weight: 500 !important;
+  transition: background-color 0.3s ease !important;
+}
+
+button:hover,
+.btn:hover {
+  background-color: #1e40af !important;
+}
+
+/* ===== Tablas ===== */
+.table {
+  background-color: #f9fafb !important;
+  border-radius: 0.75rem !important;
+  overflow: hidden !important;
+}
+
+.table th {
+  background-color: #e5e7eb !important;
+  font-weight: 600 !important;
+  color: #374151 !important;
+}
+
+.table td {
+  color: #111827 !important;
+}
+
+/* ===== Formularios ===== */
+input,
+select,
+textarea {
+  border: 1px solid #d1d5db !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem !important;
+  outline: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3) !important;
+}
