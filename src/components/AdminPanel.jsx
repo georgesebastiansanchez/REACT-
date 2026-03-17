@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./NavbarAdmin";
 import Modulo from "./Modulo";
-import "../css/Adminpanel.css";
+import "../css/AdminPanel.css";
 
 export default function AdminPanel() {
   return (
