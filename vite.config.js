@@ -5,6 +5,9 @@ export default defineConfig({
   plugins: [react()],
   preview: {
     port: process.env.PORT || 4173,
-    host: true
+    host: true,
+    allowedHosts: [
+      'react-production-ca03.up.railway.app' // Añade tu dominio aquí
+    ]
   }
 })
