@@ -402,7 +402,7 @@ const ReportesSystem = () => {
           errorMessage = data?.message || error.message;
         }
       } else if (error.request) {
-        errorMessage = 'Error de conexión. Verifica que el servidor de la API esté funcionando en localhost:8000.';
+        errorMessage = 'Error de conexión. Verifica que el servidor de la API';
       }
 
       setError(errorMessage);
