@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, Package, DollarSign, Layers, CheckCircle, XCircle } from 'lucide-react';
 import axios from "axios";
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
 
 // NAVBAR CON ROLES
 const NavbarAdmin = ({ userData }) => {

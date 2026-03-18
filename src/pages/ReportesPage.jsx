@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de que Bootstrap es
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Y los iconos de Bootstrap
 
 // Base URL para la API
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
 
 // Configurar interceptor para Axios (Añade el token a todas las peticiones salientes)
 axios.interceptors.request.use(

@@ -6,7 +6,7 @@ const ProveedorTable = ({ proveedores, onEditar, onEliminar }) => {
     if (!confirmar) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/proveedores/${id}`, {
+      const res = await fetch(`web-production-d9e15.up.railway.app/api/proveedores/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",

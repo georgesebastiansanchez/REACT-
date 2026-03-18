@@ -28,8 +28,8 @@ const ProveedorForm = ({ proveedorEditado, onGuardado, onCancelar }) => {
 
     try {
       const url = proveedorEditado
-        ? `http://localhost:8000/api/proveedores/${proveedorEditado.id}`
-        : "http://localhost:8000/api/proveedores";
+        ? `web-production-d9e15.up.railway.app/api/proveedores/${proveedorEditado.id}`
+        : "web-production-d9e15.up.railway.app/api/proveedores";
 
       const method = proveedorEditado ? "PUT" : "POST";
 

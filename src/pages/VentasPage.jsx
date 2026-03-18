@@ -3,7 +3,7 @@ import { AlertCircle, Edit2, Trash2, Plus, Save, X, FileText, DollarSign } from 
 import axios from "axios";
 
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
 
 axios.defaults.baseURL = API_BASE_URL;
 
