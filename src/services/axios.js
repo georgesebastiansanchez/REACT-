@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://web-production-d9e15.up.railway.app/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://web-production-d9e15.up.railway.app/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
