@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, Package, DollarSign, Layers, CheckCircle, XCircle } from 'lucide-react';
-import axios from "axios";
+import axiosInstance from '../services/axios';
 
-const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
+
 
 // NAVBAR CON ROLES
 const NavbarAdmin = ({ userData }) => {
@@ -57,7 +57,7 @@ const NavbarAdmin = ({ userData }) => {
 const productoService = {
   getAllProductos: async () => {
     try {
-      const response = await axios.get('/productos');
+      const response = await axiosInstance.get('/productos');
       return response.data;
     } catch (error) {
       console.error('Error al obtener productos:', error);
@@ -67,7 +67,7 @@ const productoService = {
 
   createProducto: async (productoData) => {
     try {
-      const response = await axios.post('/productos', productoData);
+      const response =await axiosInstance.post('/productos', productoData);
       return response.data;
     } catch (error) {
       console.error('Error al crear producto:', error);
@@ -77,7 +77,7 @@ const productoService = {
 
   updateProducto: async (id, productoData) => {
     try {
-      const response = await axios.put(`/productos/${id}`, productoData);
+      const response = await axiosInstance.put(`/productos/${id}`, productoData);
       return response.data;
     } catch (error) {
       console.error('Error al actualizar producto:', error);
@@ -87,7 +87,7 @@ const productoService = {
 
   deleteProducto: async (id) => {
     try {
-      const response = await axios.delete(`/productos/${id}`);
+      const response = await axiosInstance.delete(`/productos/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al eliminar producto:', error);
@@ -97,7 +97,7 @@ const productoService = {
 
   getProductoById: async (id) => {
     try {
-      const response = await axios.get(`/productos/${id}`);
+      const response = await axiosInstance.get(`/productos/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al obtener producto:', error);

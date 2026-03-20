@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X } from 'lucide-react';
-import axios from "axios";
+import axiosInstance from '../services/axios';
 
-const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
+
 
 // --------------------------------------------------------------
 // Navbar Admin - CORREGIDO PARA DETECTAR ROLES
@@ -65,7 +65,7 @@ const NavbarAdmin = ({ userData }) => {
 const proveedorService = {
   getAllProveedores: async () => {
     try {
-      const response = await axios.get('/proveedores');
+      const response = await axiosInstance.get('/proveedores');
       return response.data;
     } catch (error) {
       console.error('Error al obtener proveedores:', error);
@@ -75,7 +75,7 @@ const proveedorService = {
 
   createProveedor: async (proveedorData) => {
     try {
-      const response = await axios.post('/proveedores', proveedorData);
+      const response = await axiosInstance.post('/proveedores', proveedorData);
       return response.data;
     } catch (error) {
       console.error('Error al crear proveedor:', error);
@@ -85,7 +85,7 @@ const proveedorService = {
 
   updateProveedor: async (id, proveedorData) => {
     try {
-      const response = await axios.put(`/proveedores/${id}`, proveedorData);
+      const response = await axiosInstance.put(`/proveedores/${id}`, proveedorData);
       return response.data;
     } catch (error) {
       console.error('Error al actualizar proveedor:', error);
@@ -95,7 +95,7 @@ const proveedorService = {
 
   deleteProveedor: async (id) => {
     try {
-      const response = await axios.delete(`/proveedores/${id}`);
+      const response = await axiosInstance.delete(`/proveedores/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al eliminar proveedor:', error);
@@ -105,7 +105,7 @@ const proveedorService = {
 
   getProveedorById: async (id) => {
     try {
-      const response = await axios.get(`/proveedores/${id}`);
+      const response = await axiosInstance.get(`/proveedores/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al obtener proveedor:', error);

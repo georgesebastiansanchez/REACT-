@@ -1,7 +1,7 @@
 // src/pages/ComprasPage.jsx
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, Package, ShoppingCart, Calendar, DollarSign } from 'lucide-react';
-import axios from "axios";
+import axiosInstance from '../services/axios';
 
 const API_BASE_URL = 'https://web-production-d9e15.up.railway.app/api';
 
@@ -75,7 +75,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${API_BASE_URL}/compras`);
+      const response = await axiosInstance.get(`${API_BASE_URL}/compras`);
       if (response.data.success) {
         setCompras(response.data.data || []);
       } else {
@@ -105,7 +105,7 @@ const useCompras = () => {
 
   const cargarProveedores = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/proveedores`);
+      const response =await axiosInstance.get(`${API_BASE_URL}/proveedores`);
       if (response.data.success) {
         setProveedores(response.data.data || []);
       }
@@ -118,7 +118,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${API_BASE_URL}/compras`, compraData);
+      const response = await axiosInstance.post(`${API_BASE_URL}/compras`, compraData);
       if (response.data.success) {
         await cargarCompras();
         return response.data;
@@ -157,7 +157,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.put(`${API_BASE_URL}/compras/${id}`, compraData);
+      const response = await axiosInstance.put(`${API_BASE_URL}/compras/${id}`, compraData);
       if (response.data.success) {
         await cargarCompras();
         return response.data;
@@ -197,7 +197,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.delete(`${API_BASE_URL}/compras/${id}`);
+      const response = await axiosInstance.delete(`${API_BASE_URL}/compras/${id}`);
       if (response.data.success) {
         setCompras(prev => prev.filter(c => c.IdCompras !== id));
         return response.data;
@@ -268,9 +268,9 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
     try {
       let result;
       if (compraEditada) {
-        result = await axios.put(`${API_BASE_URL}/compras/${compraEditada.IdCompras}`, formData);
+        result = await axiosInstance.put(`${API_BASE_URL}/compras/${compraEditada.IdCompras}`, formData);
       } else {
-        result = await axios.post(`${API_BASE_URL}/compras`, formData);
+        result = await axiosInstance.post(`${API_BASE_URL}/compras`, formData);
       }
       onGuardado(result.data);
       if (!compraEditada) {
@@ -512,7 +512,7 @@ const ComprasPage = () => {
 
   const handleEliminar = async (id) => {
     try {
-      await axios.delete(`${API_BASE_URL}/compras/${id}`);
+      await axiosInstance.delete(`${API_BASE_URL}/compras/${id}`);
       await cargarCompras();
     } catch (error) {
       throw error;

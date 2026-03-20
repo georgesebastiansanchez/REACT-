@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de que Bootstrap es
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Y los iconos de Bootstrap
 
 // Base URL para la API
-const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
+
 
 // Configurar interceptor para Axios (Añade el token a todas las peticiones salientes)
 axios.interceptors.request.use(
@@ -355,7 +355,7 @@ const ReportesSystem = () => {
 
       for (let i = 0; i < maxRetries; i++) {
         try {
-          response = await axios.get(`${API_BASE_URL}/reportes/dashboard`, {
+          response = await axiosInstance.get(`${API_BASE_URL}/reportes/dashboard`, {
             params: {
               fecha_desde: fechaDesde,
               fecha_hasta: fechaHasta

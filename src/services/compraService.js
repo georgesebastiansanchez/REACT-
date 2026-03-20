@@ -3,7 +3,7 @@ const API_URL = 'https://web-production-d9e15.up.railway.app/api';
 const compraService = {
   getAllCompras: async () => {
     try {
-      const response = await axios.get('/compras');
+      const response = await axiosInstance.get('/compras');
       return response.data;
     } catch (error) {
       console.error('Error al obtener compras:', error);
@@ -13,7 +13,7 @@ const compraService = {
 
   createCompra: async (compraData) => {
     try {
-      const response = await axios.post('/compras', compraData);
+      const response = await axiosInstance.post('/compras', compraData);
       return response.data;
     } catch (error) {
       console.error('Error al crear compra:', error);
@@ -23,7 +23,7 @@ const compraService = {
 
   updateCompra: async (id, compraData) => {
     try {
-      const response = await axios.put(`/compras/${id}`, compraData);
+      const response = await axiosInstance.put(`/compras/${id}`, compraData);
       return response.data;
     } catch (error) {
       console.error('Error al actualizar compra:', error);
@@ -33,7 +33,7 @@ const compraService = {
 
   deleteCompra: async (id) => {
     try {
-      const response = await axios.delete(`/compras/${id}`);
+      const response = await axiosInstance.delete(`/compras/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al eliminar compra:', error);
@@ -43,7 +43,7 @@ const compraService = {
 
   getCompraById: async (id) => {
     try {
-      const response = await axios.get(`/compras/${id}`);
+      const response = await axiosInstance.get(`/compras/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al obtener compra:', error);

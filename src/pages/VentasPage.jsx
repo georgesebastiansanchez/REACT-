@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, FileText, DollarSign } from 'lucide-react';
-import axios from "axios";
+import axiosInstance from '../services/axios';
 
 
-const API_BASE_URL = 'web-production-d9e15.up.railway.app/api';
 
-axios.defaults.baseURL = API_BASE_URL;
-
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 const NavbarAdmin = ({ userData }) => {
   const user = userData || { name: 'Administrador', role: 'admin' };
   const userName = user?.name || user?.username || user?.email || 'Usuario';
@@ -69,7 +56,7 @@ const NavbarAdmin = ({ userData }) => {
 const ventaService = {
   getAllVentas: async () => {
     try {
-      const response = await axios.get('/ventas');
+      const response = await axiosInstance.get('/ventas');
       return response.data;
     } catch (error) {
       console.error('Error al obtener ventas:', error);
@@ -80,7 +67,7 @@ const ventaService = {
   createVenta: async (ventaData) => {
     try {
       console.log('📤 Enviando datos:', ventaData);
-      const response = await axios.post('/ventas', ventaData);
+      const response = await axiosInstance.post('/ventas', ventaData);
       console.log('✅ Respuesta recibida:', response.data);
       return response.data;
     } catch (error) {
@@ -93,7 +80,7 @@ const ventaService = {
   updateVenta: async (id, ventaData) => {
     try {
       console.log('📤 Actualizando venta:', id, ventaData);
-      const response = await axios.put(`/ventas/${id}`, ventaData);
+      const response = await axiosInstance.put(`/ventas/${id}`, ventaData);
       console.log('✅ Respuesta recibida:', response.data);
       return response.data;
     } catch (error) {
@@ -105,7 +92,7 @@ const ventaService = {
 
   deleteVenta: async (id) => {
     try {
-      const response = await axios.delete(`/ventas/${id}`);
+      const response = await axiosInstance.delete(`/ventas/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al eliminar venta:', error);
@@ -115,7 +102,7 @@ const ventaService = {
 
   getVentaById: async (id) => {
     try {
-      const response = await axios.get(`/ventas/${id}`);
+      const response = await axiosInstance.get(`/ventas/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error al obtener venta:', error);
