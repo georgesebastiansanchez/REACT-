@@ -7,18 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'; // Y los iconos de Bootstrap
 // Base URL para la API
 
 
-// Configurar interceptor para Axios (Añade el token a todas las peticiones salientes)
-axios.interceptors.request.use(
-  (config) => {
- 
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+
 
 // Componente de barra de navegación para el administrador/usuario
 const NavbarAdmin = ({ activeSection }) => {
