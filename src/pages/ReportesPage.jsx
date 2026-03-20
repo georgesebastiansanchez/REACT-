@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, TrendingUp, Package, DollarSign, ShoppingCart, BarChart3, Calendar, RefreshCw } from 'lucide-react';
-import axios from 'axios';
+import axiosInstance from '../services/axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de que Bootstrap esté disponible
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Y los iconos de Bootstrap
 

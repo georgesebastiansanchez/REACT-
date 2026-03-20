@@ -3,19 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, Package, ShoppingCart, Calendar, DollarSign } from 'lucide-react';
 import axiosInstance from '../services/axios';
 
-const API_BASE_URL = 'https://web-production-d9e15.up.railway.app/api';
 
-// Configurar interceptor para agregar token en cada petición
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
 const NavbarAdmin = ({ userData }) => {
   const user = userData || { name: 'Administrador' };
