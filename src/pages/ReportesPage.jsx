@@ -344,7 +344,7 @@ const ReportesSystem = () => {
 
       for (let i = 0; i < maxRetries; i++) {
         try {
-          response = await axiosInstance.get(`${API_BASE_URL}/reportes/dashboard`, {
+          response = await axiosInstance.get('/reportes/dashboard', {
             params: {
               fecha_desde: fechaDesde,
               fecha_hasta: fechaHasta

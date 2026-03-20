@@ -63,7 +63,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axiosInstance.get(`${API_BASE_URL}/compras`);
+      const response = await axiosInstance.get('/compras');
       if (response.data.success) {
         setCompras(response.data.data || []);
       } else {
@@ -93,7 +93,7 @@ const useCompras = () => {
 
   const cargarProveedores = async () => {
     try {
-      const response =await axiosInstance.get(`${API_BASE_URL}/proveedores`);
+      const response =await axiosInstance.get('/proveedores');
       if (response.data.success) {
         setProveedores(response.data.data || []);
       }
