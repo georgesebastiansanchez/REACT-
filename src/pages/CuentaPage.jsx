@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Shield, CheckCircle, XCircle, Clock, Send, Eye, Lock } from 'lucide-react';
-import axios from 'axios';
-
-const API_BASE_URL = 'https://web-production-d9e15.up.railway.app/api';
-
+import axiosInstance from '../services/axios';
 // Mapeo de módulos a rutas
 const MODULO_RUTAS = {
   'inventario': '/inventario',
@@ -440,9 +437,9 @@ export default function UserPermisosSystem() {
     setError(null);
     try {
       const [modulosRes, permisosRes, solicitudesRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/modulos`),
-        axios.get(`${API_BASE_URL}/permisos/mis-permisos`),
-        axios.get(`${API_BASE_URL}/solicitudes/mis-solicitudes`)
+        axiosInstance.get('/modulos'),
+        axiosInstance.get('/permisos/mis-permisos'),
+        axiosInstance.get('/solicitudes/mis-solicitudes'),
       ]);
 
       setModulos(modulosRes.data.data || modulosRes.data || []);

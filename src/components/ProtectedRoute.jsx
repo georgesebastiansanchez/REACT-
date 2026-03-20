@@ -1,9 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import AuthService from "../services/authService";
-import axios from 'axios';
-
-const API_URL = "https://web-production-d9e15.up.railway.app/api";
+import axiosInstance from '../services/axios';
 
 const ProtectedRoute = ({ children, requiredRole = null }) => {
   const isAuthenticated = AuthService.isAuthenticated();
@@ -63,12 +61,8 @@ export const ModuleRoute = ({ children, moduleName }) => {
           const token = AuthService.getToken(); // 👈 asegúrate que tu AuthService tenga este método
 
           const [permisosResponse, modulosResponse] = await Promise.all([
-            axios.get(`${API_URL}/permisos/mis-permisos`, {
-              headers: { Authorization: `Bearer ${token}` }
-            }),
-            axios.get(`${API_URL}/modulos`, {
-              headers: { Authorization: `Bearer ${token}` }
-            })
+  axiosInstance.get('/permisos/mis-permisos'),
+  axiosInstance.get('/modulos')
           ]);
 
           const permisos = permisosResponse.data.data || permisosResponse.data || [];
