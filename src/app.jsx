@@ -1,9 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from 'react';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import axiosInstance from './services/axios';
 // Importar servicios y componentes de autenticación
 import AuthService from './services/authService';
 import ProtectedRoute, { AdminRoute, UserRoute } from './components/ProtectedRoute';
@@ -25,13 +24,11 @@ import CuentaPage from "./pages/CuentaPage";
 import MicuentaPage from "./pages/MicuentaPage";
 function App() {
   useEffect(() => {
-    // Configurar axios con el token al cargar la app
-    const token = AuthService.getToken();
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  }, []);
-
+  const token = AuthService.getToken();
+  if (token) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+}, []);
   return (
     <div className="App">
       <Routes>
