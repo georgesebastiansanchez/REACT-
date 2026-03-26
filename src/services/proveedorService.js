@@ -1,5 +1,7 @@
 // src/services/proveedorService.js
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from './axios';
+
+const API_BASE_URL = 'https://web-production-d9e15.up.railway.app/api';
 
 const proveedorService = {
   getAllProveedores: async () => {
