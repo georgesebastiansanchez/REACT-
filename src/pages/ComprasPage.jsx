@@ -351,7 +351,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
               <label className="form-label fw-semibold">Documento del Usuario <span className="text-danger">*</span></label>
               <div className="input-group">
                 <span className="input-group-text"><i className="bi bi-person-badge"></i></span>
-                <input type="text" name="NumeroDocumentoUsuario" className={`form-control ${errors.NumeroDocumentoUsuario ? 'is-invalid' : ''}`} value={formData.NumeroDocumentoUsuario} onChange={handleChange} disabled={isDisabled} placeholder="Ej: 1234567890" />
+                <input type="text" name="NumeroDocumentoUsuario" className={`form-control ${errors.NumeroDocumentoUsuario ? 'is-invalid' : ''}`} value={formData.NumeroDocumentoUsuario} onChange={handleChange} disabled={isDisabled || !!compraEditada} placeholder="Ej: 1234567890" />
               </div>
               {errors.NumeroDocumentoUsuario && <div className="text-danger small mt-1">{errors.NumeroDocumentoUsuario}</div>}
             </div>
