@@ -111,7 +111,7 @@ const SolicitudForm = ({ modulos, onSolicitudEnviada, modulosConPermiso, solicit
     setSuccess(null);
 
     try {
-      await axiosInstance.post(`${API_BASE_URL}/solicitudes`, {
+      await axiosInstance.post('/solicitudes', {
         IdModulo: parseInt(moduloSeleccionado),
         Justificacion: justificacion
       });

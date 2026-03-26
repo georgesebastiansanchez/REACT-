@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { AlertCircle, Edit2, Trash2, Plus, Save, X, Package, ShoppingCart, Calendar, DollarSign } from 'lucide-react';
 import axiosInstance from '../services/axios';
 
-
-
 const NavbarAdmin = ({ userData }) => {
   const user = userData || { name: 'Administrador' };
   const userName = user?.name || user?.username || user?.email || 'Administrador';
@@ -12,7 +10,6 @@ const NavbarAdmin = ({ userData }) => {
   const handleLogout = () => {
     const confirmLogout = window.confirm('¿Estás seguro de que quieres cerrar sesión?');
     if (confirmLogout) {
-      console.log('🚪 Cerrando sesión del administrador...');
       localStorage.removeItem('authToken');
       window.location.href = '/login';
     }
@@ -70,7 +67,6 @@ const useCompras = () => {
         throw new Error(response.data.message || 'Error al cargar compras');
       }
     } catch (error) {
-      console.error('Error:', error);
       let errorMessage = 'Error al cargar compras';
       if (error.response) {
         const status = error.response.status;
@@ -80,7 +76,7 @@ const useCompras = () => {
         else if (status === 500) errorMessage = 'Error interno del servidor.';
         else errorMessage = data?.message || error.message;
       } else if (error.request) {
-        errorMessage = 'Error de conexión. Verifica que el servidor esté funcionando.';
+        errorMessage = 'Error de conexión.';
       } else {
         errorMessage = error.message;
       }
@@ -93,7 +89,7 @@ const useCompras = () => {
 
   const cargarProveedores = async () => {
     try {
-      const response =await axiosInstance.get('/proveedores');
+      const response = await axiosInstance.get('/proveedores');
       if (response.data.success) {
         setProveedores(response.data.data || []);
       }
@@ -106,7 +102,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axiosInstance.post(`${API_BASE_URL}/compras`, compraData);
+      const response = await axiosInstance.post('/compras', compraData);
       if (response.data.success) {
         await cargarCompras();
         return response.data;
@@ -114,23 +110,19 @@ const useCompras = () => {
         throw new Error(response.data.message || 'Error al crear compra');
       }
     } catch (error) {
-      console.error('Error al crear compra:', error);
       let errorMessage = 'Error al crear compra';
       if (error.response) {
         const status = error.response.status;
         const data = error.response.data;
         if (status === 400) {
-          if (data?.errors) {
-            const validationErrors = Object.values(data.errors).flat().join(', ');
-            errorMessage = `Errores de validación: ${validationErrors}`;
-          } else {
-            errorMessage = data?.message || 'Datos inválidos. Verifica los campos.';
-          }
-        } else if (status === 401) errorMessage = 'No autorizado. Por favor, inicia sesión nuevamente.';
+          errorMessage = data?.errors
+            ? `Errores de validación: ${Object.values(data.errors).flat().join(', ')}`
+            : data?.message || 'Datos inválidos.';
+        } else if (status === 401) errorMessage = 'No autorizado.';
         else if (status === 403) errorMessage = 'No tienes permisos para crear compras.';
         else errorMessage = data?.message || error.message;
       } else if (error.request) {
-        errorMessage = 'Error de conexión. Verifica que el servidor esté funcionando.';
+        errorMessage = 'Error de conexión.';
       } else {
         errorMessage = error.message;
       }
@@ -145,7 +137,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axiosInstance.put(`${API_BASE_URL}/compras/${id}`, compraData);
+      const response = await axiosInstance.put(`/compras/${id}`, compraData);
       if (response.data.success) {
         await cargarCompras();
         return response.data;
@@ -153,24 +145,20 @@ const useCompras = () => {
         throw new Error(response.data.message || 'Error al actualizar compra');
       }
     } catch (error) {
-      console.error('Error al actualizar compra:', error);
       let errorMessage = 'Error al actualizar compra';
       if (error.response) {
         const status = error.response.status;
         const data = error.response.data;
         if (status === 400) {
-          if (data?.errors) {
-            const validationErrors = Object.values(data.errors).flat().join(', ');
-            errorMessage = `Errores de validación: ${validationErrors}`;
-          } else {
-            errorMessage = data?.message || 'Datos inválidos.';
-          }
-        } else if (status === 401) errorMessage = 'No autorizado. Por favor, inicia sesión nuevamente.';
+          errorMessage = data?.errors
+            ? `Errores de validación: ${Object.values(data.errors).flat().join(', ')}`
+            : data?.message || 'Datos inválidos.';
+        } else if (status === 401) errorMessage = 'No autorizado.';
         else if (status === 403) errorMessage = 'No tienes permisos para actualizar compras.';
         else if (status === 404) errorMessage = 'Compra no encontrada.';
         else errorMessage = data?.message || error.message;
       } else if (error.request) {
-        errorMessage = 'Error de conexión. Verifica que el servidor esté funcionando.';
+        errorMessage = 'Error de conexión.';
       } else {
         errorMessage = error.message;
       }
@@ -185,7 +173,7 @@ const useCompras = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axiosInstance.delete(`${API_BASE_URL}/compras/${id}`);
+      const response = await axiosInstance.delete(`/compras/${id}`);
       if (response.data.success) {
         setCompras(prev => prev.filter(c => c.IdCompras !== id));
         return response.data;
@@ -193,18 +181,17 @@ const useCompras = () => {
         throw new Error(response.data.message || 'Error al eliminar compra');
       }
     } catch (error) {
-      console.error('Error al eliminar compra:', error);
       let errorMessage = 'Error al eliminar compra';
       if (error.response) {
         const status = error.response.status;
         const data = error.response.data;
         if (status === 400) errorMessage = data?.message || 'No se puede eliminar la compra.';
-        else if (status === 401) errorMessage = 'No autorizado. Por favor, inicia sesión nuevamente.';
+        else if (status === 401) errorMessage = 'No autorizado.';
         else if (status === 403) errorMessage = 'No tienes permisos para eliminar compras.';
         else if (status === 404) errorMessage = 'Compra no encontrada.';
         else errorMessage = data?.message || error.message;
       } else if (error.request) {
-        errorMessage = 'Error de conexión. Verifica que el servidor esté funcionando.';
+        errorMessage = 'Error de conexión.';
       } else {
         errorMessage = error.message;
       }
@@ -256,9 +243,9 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
     try {
       let result;
       if (compraEditada) {
-        result = await axiosInstance.put(`${API_BASE_URL}/compras/${compraEditada.IdCompras}`, formData);
+        result = await axiosInstance.put(`/compras/${compraEditada.IdCompras}`, formData);
       } else {
-        result = await axiosInstance.post(`${API_BASE_URL}/compras`, formData);
+        result = await axiosInstance.post('/compras', formData);
       }
       onGuardado(result.data);
       if (!compraEditada) {
@@ -266,7 +253,6 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
         setFormData({FechaCompra: today, Total: '', Estado: 'Pendiente', IdProveedor: '', NumeroDocumentoUsuario: ''});
       }
     } catch (error) {
-      console.error(error);
       setErrors({ general: error.message });
     } finally {
       setFormLoading(false);
@@ -290,7 +276,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
           </div>
         </div>
         {errors.general && (
-          <div className="alert alert-danger d-flex align-items-center" role="alert">
+          <div className="alert alert-danger d-flex align-items-center">
             <AlertCircle className="me-2" size={20} />
             <div>{errors.general}</div>
           </div>
@@ -303,7 +289,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
                 <span className="input-group-text"><Calendar size={18} /></span>
                 <input type="date" name="FechaCompra" className={`form-control ${errors.FechaCompra ? 'is-invalid' : ''}`} value={formData.FechaCompra} onChange={handleChange} disabled={isDisabled} />
               </div>
-              {errors.FechaCompra && <div className="text-danger small mt-1 d-flex align-items-center"><AlertCircle size={14} className="me-1" />{errors.FechaCompra}</div>}
+              {errors.FechaCompra && <div className="text-danger small mt-1">{errors.FechaCompra}</div>}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-semibold">Total <span className="text-danger">*</span></label>
@@ -311,7 +297,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
                 <span className="input-group-text"><DollarSign size={18} /></span>
                 <input type="number" name="Total" className={`form-control ${errors.Total ? 'is-invalid' : ''}`} value={formData.Total} onChange={handleChange} disabled={isDisabled} placeholder="0.00" step="0.01" min="0" />
               </div>
-              {errors.Total && <div className="text-danger small mt-1 d-flex align-items-center"><AlertCircle size={14} className="me-1" />{errors.Total}</div>}
+              {errors.Total && <div className="text-danger small mt-1">{errors.Total}</div>}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-semibold">Proveedor <span className="text-danger">*</span></label>
@@ -322,16 +308,16 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
                   {proveedores.map(prov => <option key={prov.IdProveedor} value={prov.IdProveedor}>{prov.NombreProveedor}</option>)}
                 </select>
               </div>
-              {errors.IdProveedor && <div className="text-danger small mt-1 d-flex align-items-center"><AlertCircle size={14} className="me-1" />{errors.IdProveedor}</div>}
+              {errors.IdProveedor && <div className="text-danger small mt-1">{errors.IdProveedor}</div>}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-semibold">Estado <span className="text-danger">*</span></label>
               <div className="input-group">
                 <span className="input-group-text"><i className="bi bi-info-circle"></i></span>
                 <select name="Estado" className="form-select" value={formData.Estado} onChange={handleChange} disabled={isDisabled}>
-                  <option value="Pendiente">Pendiente</option>
+                  <option value="pendiente">Pendiente</option>
                   <option value="recibida">Recibida</option>
-                  <option value="Cancelada">Cancelada</option>
+                  <option value="cancelada">Cancelada</option>
                 </select>
               </div>
             </div>
@@ -341,7 +327,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
                 <span className="input-group-text"><i className="bi bi-person-badge"></i></span>
                 <input type="text" name="NumeroDocumentoUsuario" className={`form-control ${errors.NumeroDocumentoUsuario ? 'is-invalid' : ''}`} value={formData.NumeroDocumentoUsuario} onChange={handleChange} disabled={isDisabled} placeholder="Ej: 1234567890" />
               </div>
-              {errors.NumeroDocumentoUsuario && <div className="text-danger small mt-1 d-flex align-items-center"><AlertCircle size={14} className="me-1" />{errors.NumeroDocumentoUsuario}</div>}
+              {errors.NumeroDocumentoUsuario && <div className="text-danger small mt-1">{errors.NumeroDocumentoUsuario}</div>}
             </div>
           </div>
           <hr />
@@ -376,7 +362,7 @@ const CompraTable = ({ compras, onEditar, onEliminar, loading }) => {
   const formatCurrency = (value) => new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', minimumFractionDigits: 0}).format(value);
 
   const getEstadoBadge = (estado) => {
-    const badges = {'Pendiente': 'bg-warning text-dark', 'En Proceso': 'bg-info', 'recibida': 'bg-success', 'Cancelada': 'bg-danger'};
+    const badges = {'pendiente': 'bg-warning text-dark', 'recibida': 'bg-success', 'cancelada': 'bg-danger'};
     return badges[estado] || 'bg-secondary';
   };
 
@@ -447,8 +433,8 @@ const CompraTable = ({ compras, onEditar, onEliminar, loading }) => {
                     <td className="px-4 py-3"><div className="text-muted small"><i className="bi bi-person-badge me-1"></i>{compra.NombreUsuario || compra.NumeroDocumentoUsuario}</div></td>
                     <td className="px-4 py-3 text-center">
                       <div className="btn-group btn-group-sm">
-                        <button className="btn btn-outline-success" onClick={() => onEditar(compra)} title="Editar compra" disabled={deleteLoading === compra.IdCompras}><Edit2 size={16} /></button>
-                        <button className="btn btn-outline-danger" onClick={() => handleEliminar(compra)} title="Eliminar compra" disabled={deleteLoading === compra.IdCompras}>
+                        <button className="btn btn-outline-success" onClick={() => onEditar(compra)} disabled={deleteLoading === compra.IdCompras}><Edit2 size={16} /></button>
+                        <button className="btn btn-outline-danger" onClick={() => handleEliminar(compra)} disabled={deleteLoading === compra.IdCompras}>
                           {deleteLoading === compra.IdCompras ? <span className="spinner-border spinner-border-sm"></span> : <Trash2 size={16} />}
                         </button>
                       </div>
@@ -460,7 +446,7 @@ const CompraTable = ({ compras, onEditar, onEliminar, loading }) => {
           </div>
         ) : (
           <div className="text-center py-5">
-            <div className="mb-3"><ShoppingCart className="text-muted" size={48} /></div>
+            <ShoppingCart className="text-muted mb-3" size={48} />
             <h5 className="text-muted">No hay compras registradas</h5>
             <p className="text-muted mb-0">Registra la primera compra usando el formulario de arriba</p>
           </div>
@@ -500,7 +486,7 @@ const ComprasPage = () => {
 
   const handleEliminar = async (id) => {
     try {
-      await axiosInstance.delete(`${API_BASE_URL}/compras/${id}`);
+      await axiosInstance.delete(`/compras/${id}`);
       await cargarCompras();
     } catch (error) {
       throw error;

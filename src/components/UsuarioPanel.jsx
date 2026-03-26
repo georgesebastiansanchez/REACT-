@@ -3,6 +3,7 @@ import Navbar from "./NavbarUsuario";
 import Modulo from "./Modulo";
 import AuthService from "../services/authService";
 import "../css/UsuarioPanel.css";
+import axiosInstance from '../services/axios';
 
 const imagenesModulos = {
   inventario: "img/inventarios.png",
@@ -16,8 +17,8 @@ const imagenesModulos = {
   categorias: "img/inventarios.png",
 };
 
-// Configuración de la API
-const API_BASE_URL = 'https://web-production-d9e15.up.railway.app/api';
+
+
 
 // Mapeo de nombres de módulos a rutas de React
 const rutasModulos = {
@@ -74,37 +75,13 @@ export default function UsuarioPanel({ userData }) {
       setError(null);
       
       try {
-        const token = getToken();
-        
-        if (!token) {
-          throw new Error('No hay token de autenticación');
-        }
-
-        const headers = {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        };
-
-        // Llamadas paralelas a la API
         const [modulosResponse, permisosResponse] = await Promise.all([
-          fetch(`${API_BASE_URL}/modulos`, { headers }),
-          fetch(`${API_BASE_URL}/permisos/mis-permisos`, { headers })
+          axiosInstance.get('/modulos'),
+          axiosInstance.get('/permisos/mis-permisos')
         ]);
 
-        // Verificar errores de autenticación
-        if (modulosResponse.status === 401 || permisosResponse.status === 401) {
-          localStorage.removeItem('authToken');
-          sessionStorage.removeItem('authToken');
-          window.location.href = '/';
-          return;
-        }
-
-        if (!modulosResponse.ok || !permisosResponse.ok) {
-          throw new Error('Error al cargar los datos');
-        }
-
-        const modulosData = await modulosResponse.json();
-        const permisosData = await permisosResponse.json();
+        const modulosData = modulosResponse.data;
+        const permisosData = permisosResponse.data;
 
         // Extraer los arrays de datos (múltiples formatos posibles)
         const modulosArray = Array.isArray(modulosData) 
