@@ -206,16 +206,35 @@ const useCompras = () => {
 };
 
 const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedores }) => {
-  const [formData, setFormData] = useState({FechaCompra: '', Total: '', Estado: 'Pendiente', IdProveedor: '', NumeroDocumentoUsuario: ''});
+  // FIX: Estado inicial con 'pendiente' en minúscula para coincidir con el enum de la BD
+  const [formData, setFormData] = useState({
+    FechaCompra: '',
+    Total: '',
+    Estado: 'pendiente', // ← FIX: minúscula
+    IdProveedor: '',
+    NumeroDocumentoUsuario: ''
+  });
   const [errors, setErrors] = useState({});
   const [formLoading, setFormLoading] = useState(false);
 
   useEffect(() => {
     if (compraEditada) {
-      setFormData({FechaCompra: compraEditada.FechaCompra || '', Total: compraEditada.Total || '', Estado: compraEditada.Estado || 'Pendiente', IdProveedor: compraEditada.IdProveedor || '', NumeroDocumentoUsuario: compraEditada.NumeroDocumentoUsuario || ''});
+      setFormData({
+        FechaCompra: compraEditada.FechaCompra || '',
+        Total: compraEditada.Total || '',
+        Estado: compraEditada.Estado || 'pendiente', // ← FIX: minúscula
+        IdProveedor: compraEditada.IdProveedor || '',
+        NumeroDocumentoUsuario: String(compraEditada.NumeroDocumentoUsuario || '') // ← FIX: convertir a string
+      });
     } else {
       const today = new Date().toISOString().split('T')[0];
-      setFormData({FechaCompra: today, Total: '', Estado: 'Pendiente', IdProveedor: '', NumeroDocumentoUsuario: ''});
+      setFormData({
+        FechaCompra: today,
+        Total: '',
+        Estado: 'pendiente', // ← FIX: minúscula
+        IdProveedor: '',
+        NumeroDocumentoUsuario: ''
+      });
     }
     setErrors({});
   }, [compraEditada]);
@@ -231,7 +250,8 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
     if (!formData.FechaCompra) newErrors.FechaCompra = 'La fecha de compra es requerida';
     if (!formData.Total || parseFloat(formData.Total) <= 0) newErrors.Total = 'El total debe ser mayor a 0';
     if (!formData.IdProveedor) newErrors.IdProveedor = 'Debes seleccionar un proveedor';
-    if (!formData.NumeroDocumentoUsuario.trim()) newErrors.NumeroDocumentoUsuario = 'El documento del usuario es requerido';
+    // FIX: String() garantiza que .trim() nunca falle aunque llegue un número
+    if (!String(formData.NumeroDocumentoUsuario || '').trim()) newErrors.NumeroDocumentoUsuario = 'El documento del usuario es requerido';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -250,7 +270,13 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
       onGuardado(result.data);
       if (!compraEditada) {
         const today = new Date().toISOString().split('T')[0];
-        setFormData({FechaCompra: today, Total: '', Estado: 'Pendiente', IdProveedor: '', NumeroDocumentoUsuario: ''});
+        setFormData({
+          FechaCompra: today,
+          Total: '',
+          Estado: 'pendiente', // ← FIX: minúscula
+          IdProveedor: '',
+          NumeroDocumentoUsuario: ''
+        });
       }
     } catch (error) {
       setErrors({ general: error.message });
