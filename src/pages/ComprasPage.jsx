@@ -206,11 +206,10 @@ const useCompras = () => {
 };
 
 const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedores }) => {
-  // FIX: Estado inicial con 'pendiente' en minúscula para coincidir con el enum de la BD
   const [formData, setFormData] = useState({
     FechaCompra: '',
     Total: '',
-    Estado: 'pendiente', // ← FIX: minúscula
+    Estado: 'Pendiente',
     IdProveedor: '',
     NumeroDocumentoUsuario: ''
   });
@@ -222,7 +221,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
       setFormData({
         FechaCompra: compraEditada.FechaCompra || '',
         Total: compraEditada.Total || '',
-        Estado: compraEditada.Estado || 'pendiente', // ← FIX: minúscula
+        Estado: compraEditada.Estado || 'Pendiente',
         IdProveedor: compraEditada.IdProveedor || '',
         NumeroDocumentoUsuario: String(compraEditada.NumeroDocumentoUsuario || '') // ← FIX: convertir a string
       });
@@ -231,7 +230,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
       setFormData({
         FechaCompra: today,
         Total: '',
-        Estado: 'pendiente', // ← FIX: minúscula
+        Estado: 'Pendiente',
         IdProveedor: '',
         NumeroDocumentoUsuario: ''
       });
@@ -273,7 +272,7 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
         setFormData({
           FechaCompra: today,
           Total: '',
-          Estado: 'pendiente', // ← FIX: minúscula
+          Estado: 'Pendiente',
           IdProveedor: '',
           NumeroDocumentoUsuario: ''
         });
@@ -341,9 +340,9 @@ const CompraForm = ({ compraEditada, onGuardado, onCancelar, loading, proveedore
               <div className="input-group">
                 <span className="input-group-text"><i className="bi bi-info-circle"></i></span>
                 <select name="Estado" className="form-select" value={formData.Estado} onChange={handleChange} disabled={isDisabled}>
-                  <option value="pendiente">Pendiente</option>
+                  <option value="Pendiente">Pendiente</option>
                   <option value="recibida">Recibida</option>
-                  <option value="cancelada">Cancelada</option>
+                  <option value="Cancelada">Cancelada</option>
                 </select>
               </div>
             </div>
