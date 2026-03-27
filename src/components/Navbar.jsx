@@ -74,6 +74,14 @@ export default function Navbar() {
           <Link to="/registrar" className="btn btn-outline-secondary ms-lg-2">
             Crear cuenta
           </Link>
+          <a
+          href="https://github.com/georgesebastiansanchez/APK-moon-flutter/releases/download/v1.0.0/app-release.apk"
+  className="btn btn-success ms-lg-2"
+  download
+>
+  <i className="bi bi-android2 me-1"></i>
+  Descargar App
+</a>
         </div>
       </div>
     </nav>
